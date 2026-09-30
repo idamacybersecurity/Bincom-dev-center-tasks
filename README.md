@@ -31,7 +31,7 @@ Performed static analysis and manual source-code review of a Python Flask applic
 
 `Python` `Flask` `Bandit` `SAST` `OWASP`
 
-🔗 [View Phase 1 Project](PASTE-TASK-LINK-HERE)
+🔗 [View Phase 1 Project](https://docs.google.com/document/d/1LuoU0R_oLNwzCabguDPLGto5_HtA2GnU/edit?usp=sharing&ouid=117891865848714392423&rtpof=true&sd=true)
 
 ---
 
@@ -54,7 +54,7 @@ Moved the security testing from a manual process into an automated GitHub Action
 
 `Git` `GitHub` `GitHub Actions` `Python` `Bandit` `CI/CD` `SAST`
 
-🔗 [View Phase 2 Project](PASTE-TASK-LINK-HERE)
+🔗 [View Phase 2 Project](https://docs.google.com/document/d/1jtouyCqhDDJJgtvIhMuXo_TZEcqe0cbt/edit?usp=sharing&ouid=117891865848714392423&rtpof=true&sd=true)
 
 ---
 
@@ -77,7 +77,7 @@ Expanded the security pipeline from a single SAST tool into a multi-tool applica
 
 `Bandit` `Semgrep` `pip-audit` `SARIF` `GitHub Code Scanning` `SAST` `SCA` `GitHub Actions`
 
-🔗 [View Phase 3 Project](PASTE-TASK-LINK-HERE)
+🔗 [View Phase 3 Project](https://docs.google.com/document/d/1TJS_NbyISTUwphPO-TzeyK2_-yDtgkHW/edit?usp=sharing&ouid=117891865848714392423&rtpof=true&sd=true)
 
 ---
 
@@ -102,7 +102,7 @@ Hardened the existing CI/CD security pipeline and introduced organization-specif
 
 `GitHub Actions` `Semgrep` `Bandit` `Pre-Commit` `Supply Chain Security` `Policy-as-Code`
 
-🔗 [View Phase 4 Project](PASTE-TASK-LINK-HERE)
+🔗 [View Phase 4 Project](https://docs.google.com/document/d/18zj3tJRvWSfn0dxFyTkfHtFSiUrKK6PM/edit?usp=sharing&ouid=117891865848714392423&rtpof=true&sd=true)
 
 ---
 
@@ -129,7 +129,7 @@ Extended the security automation with dependency management, framework-specific 
 
 `Dependabot` `Semgrep` `detect-secrets` `Pre-Commit` `GitHub Actions` `Python` `Flask`
 
-🔗 [View Phase 5 Project](PASTE-TASK-LINK-HERE)
+🔗 [View Phase 5 Project](https://docs.google.com/document/d/19rKBinuTWfiKq4vU0B_OZ50iFDCLDMUC/edit?usp=sharing&ouid=117891865848714392423&rtpof=true&sd=true)
 
 ---
 
@@ -168,7 +168,7 @@ The project applies security controls from development through container build, 
 
 `GitHub Actions` `Docker` `Bandit` `TruffleHog` `OPA` `Rego` `Conftest` `Syft` `CycloneDX` `Grype` `GHCR` `Cosign` `Sigstore` `AWS IAM` `OIDC` `Kubernetes`
 
-🔗 [View Enterprise DevSecOps Phase 1 Project ](PASTE-TASK-LINK-HERE)
+🔗 [View Enterprise DevSecOps Phase 1 Project ](https://docs.google.com/document/d/1ODbjnt8f5GdSkER5ngmTdgwZR2VR4kTB/edit?usp=sharing&ouid=117891865848714392423&rtpof=true&sd=true)
 
 ---
 
