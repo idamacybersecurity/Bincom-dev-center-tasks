@@ -32,7 +32,8 @@ The project now applies security controls before commit, during build and signin
 
 `k3s` `WSL2` `Kubernetes` `Kyverno` `Cosign` `Sigstore` `CycloneDX` `Syft` `GitHub Actions` `GHCR` `TruffleHog` `pre-commit`
 
-🔗 [View Enterprise DevSecOps Phase 2 Preparation Project ]([https://docs.google.com/document/d/1FE4L82Q_k8Je3uBYQdjZ4LTwQaZeq2Yd/edit?usp=sharing&ouid=117891865848714392423&rtpof=true&sd=true)
+
+🔗 [View Enterprise DevSecOps Phase 2 Preparation Project ](https://docs.google.com/document/d/1FE4L82Q_k8Je3uBYQdjZ4LTwQaZeq2Yd/edit?usp=sharing&ouid=117891865848714392423&rtpof=true&sd=true)
 
 ---
 # 2. Enterprise DevSecOps & Container Supply Chain Security
