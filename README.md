@@ -5,9 +5,9 @@ This repository documents selected cybersecurity and DevSecOps tasks I worked on
 The projects below demonstrate my practical experience in application security, secure CI/CD, security automation, software supply-chain security, container security, policy-as-code, vulnerability management, and cloud security.
 ---
 
-## Phase 2 Preparation — Kubernetes Admission Control, SBOM Attestation & Pre-Commit Secret Scanning
+## Phase 2 Preparation — Kubernetes Admission Control, SBOM Attestation & Secret Scanning
 
-Extended the Phase 1 container supply-chain pipeline with cluster-level image trust enforcement, signed SBOM attestations, and developer-workstation secret scanning.
+Extended the Phase 1 container supply-chain pipeline with cluster-level image trust enforcement, signed SBOM attestations, and layered secret scanning.
 
 The project now applies security controls before commit, during build and signing, and at Kubernetes admission time.
 
@@ -15,25 +15,29 @@ The project now applies security controls before commit, during build and signin
 
 - Built a local single-node Kubernetes cluster using k3s on WSL2.
 - Installed Kyverno for Kubernetes admission control.
-- Created a Kyverno ImageValidatingPolicy requiring Cosign-signed project images.
-- Verified the Kyverno controllers were running and the policy was ready.
-- Admitted a signed API image referenced by immutable SHA-256 digest into the cluster.
-- Tested admission verification using an intentionally unsigned image.
-- Confirmed Kyverno logged "no signatures found" for the unsigned image.
-- Re-ran the CI negative test to confirm unsigned images fail Cosign verification and skip deployment authorization.
+- Created a Kyverno ImageValidatingPolicy requiring Cosign-signed project images, pinned to the GitHub Actions workflow identity.
+- Re-validated the policy with strict schema validation (no `--validate=false`) and fixed a misplaced `matchImageReferences` field it exposed.
+- Confirmed the policy enforces `Deny` with `failurePolicy: Fail`.
+- Tested admission with an intentionally unsigned image and confirmed it was denied and no pod was created.
+- Re-ran the CI negative test and confirmed unsigned images fail Cosign verification and skip deployment authorization.
 - Attached CycloneDX SBOMs to API and worker image digests as signed attestations using Cosign.
-- Added separate SBOM attestation verification steps for the API and worker images.
-- Required signature and attestation verification before deployment authorization.
-- Added a TruffleHog secret-scanning hook to the pre-commit workflow.
-- Verified the pre-commit hook passes on clean content.
-- Tested the hook with a controlled test secret and confirmed it blocked the commit (exit code 183).
+- Added separate attestation verification steps and required signature and attestation verification before deployment authorization.
+- Extended the Kyverno policy to require a signed SBOM attestation and confirmed a signed image without a valid attestation is denied.
+- Investigated admission timeouts for signed and attested images against the 30-second webhook limit and documented the result as a limitation.
+- Added a TruffleHog hook to the pre-commit workflow, verified it passes on clean content, and confirmed it blocks a staged test secret (exit code 183).
+- Confirmed the full Git-history TruffleHog scan continues to run in GitHub Actions as the backstop.
+
+### Known Limitations & Next Steps
+
+- Admission of a signed and attested image timed out on the single-node lab cluster; verification latency is the next item to investigate.
+- The local pre-commit hook currently points to a Windows binary and needs a portable entry.
 
 ### Tools & Technologies
 
 `k3s` `WSL2` `Kubernetes` `Kyverno` `Cosign` `Sigstore` `CycloneDX` `Syft` `GitHub Actions` `GHCR` `TruffleHog` `pre-commit`
 
 
-🔗 [View Enterprise DevSecOps Phase 2 Preparation Project ](https://docs.google.com/document/d/1FE4L82Q_k8Je3uBYQdjZ4LTwQaZeq2Yd/edit?usp=sharing&ouid=117891865848714392423&rtpof=true&sd=true)
+🔗 [View Enterprise DevSecOps Phase 2 Preparation Project ](https://docs.google.com/document/d/1_-PTt5fxDUwxOBOD82k5c0BAjwmevtv7/edit?usp=sharing&ouid=117891865848714392423&rtpof=true&sd=true)
 
 ---
 # 2. Enterprise DevSecOps & Container Supply Chain Security
