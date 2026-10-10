@@ -16,28 +16,48 @@ The project now applies security controls before commit, during build and signin
 - Built a local single-node Kubernetes cluster using k3s on WSL2.
 - Installed Kyverno for Kubernetes admission control.
 - Created a Kyverno ImageValidatingPolicy requiring Cosign-signed project images, pinned to the GitHub Actions workflow identity.
-- Re-validated the policy with strict schema validation (no `--validate=false`) and fixed a misplaced `matchImageReferences` field it exposed.
+- Re-validated the policy with strict schema validation (without `--validate=false`) and fixed a misplaced `matchImageReferences` field exposed by strict validation.
 - Confirmed the policy enforces `Deny` with `failurePolicy: Fail`.
 - Tested admission with an intentionally unsigned image and confirmed it was denied and no pod was created.
 - Re-ran the CI negative test and confirmed unsigned images fail Cosign verification and skip deployment authorization.
-- Attached CycloneDX SBOMs to API and worker image digests as signed attestations using Cosign.
-- Added separate attestation verification steps and required signature and attestation verification before deployment authorization.
-- Extended the Kyverno policy to require a signed SBOM attestation and confirmed a signed image without a valid attestation is denied.
-- Investigated admission timeouts for signed and attested images against the 30-second webhook limit and documented the result as a limitation.
-- Added a TruffleHog hook to the pre-commit workflow, verified it passes on clean content, and confirmed it blocks a staged test secret (exit code 183).
+- Attached CycloneDX SBOMs to API and worker image digests as signed in-toto attestations using Cosign.
+- Added separate attestation verification steps and required both image-signature and SBOM-attestation verification before deployment authorization.
+- Extended the Kyverno policy to require a signed CycloneDX SBOM attestation and confirmed that a signed image without a valid attestation is denied.
+- Investigated the initial signed-and-attested admission timeout against the 30-second Kyverno webhook limit.
+- Measured Cosign attestation verification latency, checked cluster/API and registry connectivity, and stabilized the local WSL2/k3s environment.
+- Increased the Kyverno webhook timeout from 30 seconds to 60 seconds for the local validation environment.
+- Admitted a signed and SBOM-attested worker image by immutable digest and confirmed the image was successfully pulled, the container was created, and the container started.
+- Added a TruffleHog hook to the pre-commit workflow, verified it passes on clean content, and confirmed it blocks a staged test secret with exit code 183.
 - Confirmed the full Git-history TruffleHog scan continues to run in GitHub Actions as the backstop.
+
+### Validation Summary
+
+| Control | Result |
+|---|---|
+| k3s local cluster | PASS |
+| Kyverno installation | PASS |
+| Signed-image admission policy | PASS |
+| Strict Kyverno policy validation | PASS |
+| Unsigned image denied in CI | PASS |
+| Unsigned image denied at Kubernetes admission | PASS |
+| Signed image without SBOM attestation denied | PASS |
+| Signed + SBOM-attested image admitted | PASS |
+| Signed + SBOM-attested container pulled and started | PASS |
+| TruffleHog clean-content pre-commit test | PASS |
+| TruffleHog staged-secret negative test | PASS |
+| Full Git-history secret scan in CI | PASS |
 
 ### Known Limitations & Next Steps
 
-- Admission of a signed and attested image timed out on the single-node lab cluster; verification latency is the next item to investigate.
-- The local pre-commit hook currently points to a Windows binary and needs a portable entry.
+- The validation was performed on a single-node local k3s/WSL2 environment and should not be treated as evidence of production-scale Kubernetes performance.
+- The Kyverno webhook timeout was increased to 60 seconds to accommodate attestation verification latency observed in the local environment. A production deployment should establish an appropriate timeout through measured registry, transparency-log, and admission-controller performance.
+- The local TruffleHog pre-commit hook currently uses the repository's Windows amd64 binary. A portable cross-platform hook implementation would be preferable for teams using different developer environments.
 
 ### Tools & Technologies
 
 `k3s` `WSL2` `Kubernetes` `Kyverno` `Cosign` `Sigstore` `CycloneDX` `Syft` `GitHub Actions` `GHCR` `TruffleHog` `pre-commit`
 
-
-🔗 [View Enterprise DevSecOps Phase 2 Preparation Project ](https://docs.google.com/document/d/1_-PTt5fxDUwxOBOD82k5c0BAjwmevtv7/edit?usp=sharing&ouid=117891865848714392423&rtpof=true&sd=true)
+🔗 [View Enterprise DevSecOps Phase 2 Preparation Project ](https://docs.google.com/document/d/1Dll4HMlT7S1ud3dQH-0B2lTO5RuwNGLD/edit?usp=sharing&ouid=117891865848714392423&rtpof=true&sd=true)
 
 ---
 # 2. Enterprise DevSecOps & Container Supply Chain Security
