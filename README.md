@@ -3,7 +3,30 @@
 This repository documents selected cybersecurity and DevSecOps tasks I worked on during my time with **Bincom Dev Center**.
 
 The projects below demonstrate my practical experience in application security, secure CI/CD, security automation, software supply-chain security, container security, policy-as-code, vulnerability management, and cloud security.
+
 ---
+## Phase 3 — Container Supply Chain Security Enhancements
+
+Extended the enterprise DevSecOps pipeline with additional container supply-chain security and validation controls.
+
+### Key Activities
+
+- Established the Kyverno image-verification cache baseline.
+- Added SLSA build provenance generation for API and worker images.
+- Generated provenance using immutable SHA-256 image digests.
+- Verified provenance attestation records for both container images.
+- Benchmarked Kyverno admission latency.
+- Confirmed the Kubernetes admission webhook maximum timeout of 30 seconds.
+- Verified the worker SBOM attestation directly with Cosign in 21.14 seconds.
+- Preserved fail-closed admission enforcement.
+- Documented caching and infrastructure optimization requirements for production.
+
+### Tools & Technologies
+
+`GitHub Actions` `Kyverno` `SLSA` `Cosign` `Sigstore` `CycloneDX` `GHCR` `Kubernetes` `k3s` `Docker` `WSL2`
+
+🔗 [VPhase 3 — Container Supply Chain Security ](https://docs.google.com/document/d/1OyogyKmFmXrlxAQGA8rmEqqxshvPaDjT/edit?usp=sharing&ouid=117891865848714392423&rtpof=true&sd=true)
+
 
 ## Phase 2 Preparation — Kubernetes Admission Control, SBOM Attestation & Secret Scanning
 
