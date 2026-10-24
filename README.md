@@ -8,6 +8,52 @@ The projects below demonstrate my practical experience in application security, 
 # 2. Enterprise DevSecOps & Container Supply Chain Security
 ---
 
+## Phase 5 — High-Performance Edge Verification & OCI Signature Mirroring
+
+Implemented a local Zot OCI registry mirror and static public-key image verification to improve container supply-chain verification performance while preserving fail-closed admission controls.
+
+### Key Activities
+
+- Deployed and validated an in-cluster Zot OCI registry mirror.
+- Configured a Kyverno ImageValidatingPolicy to use a static Cosign public key stored in the `cosign-static-public-key` Kubernetes ConfigMap.
+- Verified the mirrored API image against its immutable SHA-256 digest.
+- Validated the Zot registry API response with HTTP 200.
+- Verified the mirrored API image and checked its associated SBOM and provenance-related artifacts.
+- Confirmed that unsigned images, tampered-content images, and images with registry-manifest resolution failures were denied admission.
+- Investigated remote keyless verification without caching, remote keyless verification with caching, and local static-key verification using Zot.
+- Completed 20 successful server-side dry-run admission requests for Mode C.
+- Measured a mean Kyverno policy-execution time of approximately 150.85 ms, with 19 of 20 evaluations at or below 500 ms.
+- Preserved the existing production keyless policy and fail-closed enforcement.
+- Documented remote registry and DNS-related diagnostic failures without claiming unverified root causes or benchmark results.
+
+### Tools & Technologies
+
+`GitHub Actions` `Kyverno` `Cosign` `Sigstore` `Zot OCI Registry` `SLSA` `CycloneDX` `GHCR` `Kubernetes` `k3s` `Docker` `WSL2` `Prometheus`
+
+🔗 [View Phase 4 — High-Performance Edge Verification & OCI Signature Mirroring](https://docs.google.com/document/d/1AhX7RqaV5H18-0USlgAeOKk5hMrZKGMR/edit?usp=sharing&ouid=117891865848714392423&rtpof=true&sd=true)
+
+## Phase 4 — Cloud Supply Chain Security & Admission Performance
+
+Extended the enterprise DevSecOps pipeline with Kyverno image-verification caching, private container registry artifact inspection, and admission performance validation.
+
+### Key Activities
+
+- Enabled Kyverno image-verification caching with a maximum of 1,000 entries and a 60-minute TTL.
+- Preserved fail-closed admission enforcement using `failurePolicy: Fail` and `validationActions: Deny`.
+- Inspected the private Amazon ECR repository and its immutable API image digest.
+- Identified three OCI referrers associated with the target API image.
+- Inspected OCI image-manifest and Sigstore bundle media types in ECR artifact metadata.
+- Reviewed the existing GitHub Actions container build, signing, SBOM, and provenance workflow.
+- Benchmarked admission latency and investigated signed-image verification timeouts.
+- Documented the limitations of the existing Mode A/B/C benchmark records.
+- Identified cache-hit validation, complete signature-mirror verification, and sub-500 ms admission performance as outstanding validation requirements.
+
+### Tools & Technologies
+
+`GitHub Actions` `Kyverno` `Cosign` `Sigstore` `SLSA` `CycloneDX` `Amazon ECR` `OCI` `Kubernetes` `k3s` `Docker` `WSL2`
+
+🔗 [View Phase 4 — Cloud Supply Chain Security & Admission Performance ](https://docs.google.com/document/d/17zmPmCCFMweXEnKvXdTvwYcokFRgbHql/edit?usp=sharing&ouid=117891865848714392423&rtpof=true&sd=true)
+
 ## Phase 3 — Container Supply Chain Security Enhancements
 
 Extended the enterprise DevSecOps pipeline with additional container supply-chain security and validation controls.
@@ -28,7 +74,7 @@ Extended the enterprise DevSecOps pipeline with additional container supply-chai
 
 `GitHub Actions` `Kyverno` `SLSA` `Cosign` `Sigstore` `CycloneDX` `GHCR` `Kubernetes` `k3s` `Docker` `WSL2`
 
-🔗 [VPhase 3 — Container Supply Chain Security ](https://docs.google.com/document/d/1OyogyKmFmXrlxAQGA8rmEqqxshvPaDjT/edit?usp=sharing&ouid=117891865848714392423&rtpof=true&sd=true)
+🔗 [View Phase 3 — Container Supply Chain Security Enhancements ](https://docs.google.com/document/d/1OyogyKmFmXrlxAQGA8rmEqqxshvPaDjT/edit?usp=sharing&ouid=117891865848714392423&rtpof=true&sd=true)
 
 
 ## Phase 2 Preparation — Kubernetes Admission Control, SBOM Attestation & Secret Scanning
@@ -83,7 +129,7 @@ The project now applies security controls before commit, during build and signin
 
 `k3s` `WSL2` `Kubernetes` `Kyverno` `Cosign` `Sigstore` `CycloneDX` `Syft` `GitHub Actions` `GHCR` `TruffleHog` `pre-commit`
 
-🔗 [View Enterprise DevSecOps Phase 2 Preparation Project ](https://docs.google.com/document/d/1Dll4HMlT7S1ud3dQH-0B2lTO5RuwNGLD/edit?usp=sharing&ouid=117891865848714392423&rtpof=true&sd=true)
+🔗 [View Phase 2 Kubernetes Admission Control, SBOM Attestation & Secret Scanning ](https://docs.google.com/document/d/1Dll4HMlT7S1ud3dQH-0B2lTO5RuwNGLD/edit?usp=sharing&ouid=117891865848714392423&rtpof=true&sd=true)
 
 ## Phase 1 — Enterprise DevSecOps Pipeline & Container Supply Chain Security Engine
 
