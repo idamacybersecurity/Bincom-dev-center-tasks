@@ -21,8 +21,9 @@ Implemented a local Zot OCI registry mirror and static public-key image verifica
 - Verified the mirrored API image and checked its associated SBOM and provenance-related artifacts.
 - Confirmed that unsigned images, tampered-content images, and images with registry-manifest resolution failures were denied admission.
 - Investigated remote keyless verification without caching, remote keyless verification with caching, and local static-key verification using Zot.
-- Completed 20 successful server-side dry-run admission requests for Mode C.
-- Measured a mean Kyverno policy-execution time of approximately 150.85 ms, with 19 of 20 evaluations at or below 500 ms.
+- Completed 20 successful digest-pinned server-side dry-run admission requests for Mode C.
+- Measured a mean Kyverno policy-execution time of approximately 150.85 ms, with 19 of 20 evaluations at or below 500 ms and 17 of 20 at or below 250 ms.
+- Recorded end-to-end request elapsed times of 2,560.3–14,445.6 ms across the 20 Mode C requests. These measure the broader request path, not Kyverno policy-execution latency alone.
 - Preserved the existing production keyless policy and fail-closed enforcement.
 - Documented remote registry and DNS-related diagnostic failures without claiming unverified root causes or benchmark results.
 
@@ -30,7 +31,7 @@ Implemented a local Zot OCI registry mirror and static public-key image verifica
 
 `GitHub Actions` `Kyverno` `Cosign` `Sigstore` `Zot OCI Registry` `SLSA` `CycloneDX` `GHCR` `Kubernetes` `k3s` `Docker` `WSL2` `Prometheus`
 
-🔗 [View Phase 4 — High-Performance Edge Verification & OCI Signature Mirroring](https://docs.google.com/document/d/1AhX7RqaV5H18-0USlgAeOKk5hMrZKGMR/edit?usp=sharing&ouid=117891865848714392423&rtpof=true&sd=true)
+🔗 [View Phase 4 — High-Performance Edge Verification & OCI Signature Mirroring](https://docs.google.com/document/d/1zLSLH3M-U3kMf5e03eVFP8mHUgoP1Qj1/edit?usp=sharing&ouid=117891865848714392423&rtpof=true&sd=true)
 
 ## Phase 4 — Cloud Supply Chain Security & Admission Performance
 
