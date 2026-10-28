@@ -33,7 +33,7 @@ Implemented and tested SPIFFE/SPIRE workload identity and application-layer mutu
 
 `SPIFFE` `SPIRE` `mTLS` `X.509 SVIDs` `Python` `Kubernetes` `k3s` `Docker` `WSL2` `Linux` `kubectl` `TLS`
 
- [View Phase 6 — SPIFFE/SPIRE Zero Trust Workload Identity & mTLS](https://docs.google.com/document/d/1Gb2lGQHcIabk_06P-K47NJaFVrqsVpdl/edit?usp=sharing&ouid=117891865848714392423&rtpof=true&sd=true)
+ [View Phase 6 — SPIFFE/SPIRE Zero Trust Workload Identity & mTLS](https://docs.google.com/document/d/1xdQDy-DYAO5L68sAmbLcx8HK14GuBMMg/edit?usp=sharing&ouid=117891865848714392423&rtpof=true&sd=true)
 
 ---
 
