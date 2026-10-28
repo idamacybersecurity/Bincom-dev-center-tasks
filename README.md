@@ -6,6 +6,35 @@ The projects below demonstrate my practical experience in application security, 
 
 ----
 # 2. Enterprise DevSecOps & Container Supply Chain Security
+
+---
+
+## Phase 6 — SPIFFE/SPIRE Zero Trust Workload Identity & mTLS
+
+Implemented and tested SPIFFE/SPIRE workload identity and application-layer mutual TLS (mTLS) in a local Kubernetes environment, establishing authenticated communication between Python client and server workloads using SPIFFE identities.
+
+### Key Activities
+
+- Deployed SPIRE components in the `spire-system` namespace within a local k3s cluster.
+- Registered the client and server workloads with SPIRE using Kubernetes namespace and service-account selectors.
+- Configured workload identities for the client and server:
+  - `spiffe://devsecops.local/ns/devsecops-test/sa/mtls-client`
+  - `spiffe://devsecops.local/ns/devsecops-test/sa/mtls-server`
+- Verified SPIRE registration entries and confirmed an X.509 SVID time-to-live (TTL) of 3,600 seconds for both workload entries.
+- Implemented and validated mutual TLS communication between the Python client and server workloads.
+- Verified successful authenticated communication, with client and server SPIFFE identities recorded alongside HTTP 200 OK and `mTLS SUCCESS`.
+- Captured a negative TLS test in which a connection without an accepted client certificate was rejected with `TLSV13_ALERT_CERTIFICATE_REQUIRED`.
+- Recorded initial and renewed server SVID metadata, including certificate serial numbers, SHA-256 fingerprints, and validity windows.
+- Preserved server-side rotation logs, certificate metadata snapshots, Kubernetes pod-state information, and subsequent successful mTLS client traffic as evidence of the observed SVID rotation sequence.
+- Documented deployment manifests, test logs, screenshots, and supporting evidence under `evidence/phase6`.
+- Recorded observed Kubernetes and cluster instability without attributing it to an unverified root cause.
+
+### Tools & Technologies
+
+`SPIFFE` `SPIRE` `mTLS` `X.509 SVIDs` `Python` `Kubernetes` `k3s` `Docker` `WSL2` `Linux` `kubectl` `TLS`
+
+ [View Phase 6 — SPIFFE/SPIRE Zero Trust Workload Identity & mTLS](https://docs.google.com/document/d/1Gb2lGQHcIabk_06P-K47NJaFVrqsVpdl/edit?usp=sharing&ouid=117891865848714392423&rtpof=true&sd=true)
+
 ---
 
 ## Phase 5 — High-Performance Edge Verification & OCI Signature Mirroring
@@ -31,7 +60,7 @@ Implemented a local Zot OCI registry mirror and static public-key image verifica
 
 `GitHub Actions` `Kyverno` `Cosign` `Sigstore` `Zot OCI Registry` `SLSA` `CycloneDX` `GHCR` `Kubernetes` `k3s` `Docker` `WSL2` `Prometheus`
 
-🔗 [View Phase 4 — High-Performance Edge Verification & OCI Signature Mirroring](https://docs.google.com/document/d/1zLSLH3M-U3kMf5e03eVFP8mHUgoP1Qj1/edit?usp=sharing&ouid=117891865848714392423&rtpof=true&sd=true)
+🔗 [View Phase 5 — High-Performance Edge Verification & OCI Signature Mirroring](https://docs.google.com/document/d/1zLSLH3M-U3kMf5e03eVFP8mHUgoP1Qj1/edit?usp=sharing&ouid=117891865848714392423&rtpof=true&sd=true)
 
 ## Phase 4 — Cloud Supply Chain Security & Admission Performance
 
