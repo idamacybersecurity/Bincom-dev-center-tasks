@@ -8,6 +8,34 @@ The projects below demonstrate my practical experience in application security, 
 # 2. Enterprise DevSecOps & Container Supply Chain Security
 
 ---
+## Phase 7 — Zero Trust Service Mesh, Envoy L7 Telemetry & OPA Gatekeeper Guardrails
+
+Implemented and tested Zero Trust security controls in a local Kubernetes environment using Istio, Envoy, and OPA Gatekeeper, strengthening workload-to-workload security through mutual TLS (mTLS), identity-based authorization, Layer 7 telemetry, and Kubernetes admission guardrails.
+
+### Key Activities
+
+- Deployed Istio 1.31.1 in a local k3s Kubernetes cluster and configured Envoy sidecar injection for selected workloads.
+- Configured and validated STRICT mutual TLS (mTLS) using Istio PeerAuthentication.
+- Tested plaintext communication from a workload outside the mesh and observed a connection reset with status `000`, consistent with STRICT mTLS enforcement.
+- Configured Envoy Layer 7 access logging to capture HTTP status codes, request duration, response flags, and authorization-denial details.
+- Implemented Istio AuthorizationPolicy resources to control access to the protected `httpbin` workload based on service-account identity and HTTP methods.
+- Validated authorized GET requests returning HTTP `200` and unauthorized requests returning HTTP `403`, with Envoy RBAC denial evidence.
+- Configured reader and writer permissions and verified that:
+  - The reader identity could perform GET requests but was denied POST requests.
+  - The writer identity could perform POST requests but was denied GET requests.
+- Deployed OPA Gatekeeper v3.23.1 and implemented custom Rego ConstraintTemplates for required Istio sidecar presence and container security-context requirements.
+- Performed positive and negative Pod admission tests, confirming rejection of noncompliant configurations and successful admission of a compliant test Pod.
+- Refreshed the Gatekeeper audit and observed zero current violations for the selected constraints.
+- Preserved policy manifests, test outputs, screenshots, and supporting documentation as Phase 7 evidence.
+- Documented the architecture, implementation, validation outcomes, and repository deliverables.
+
+### Tools & Technologies
+
+`Istio 1.31.1` `Envoy` `OPA Gatekeeper v3.23.1` `Rego` `AuthorizationPolicy` `PeerAuthentication` `STRICT mTLS` `Kubernetes` `k3s` `Docker` `WSL2` `Linux` `kubectl` `HTTP` `Layer 7 Telemetry` `Zero Trust`
+
+ [View Phase 7 — Zero Trust Service Mesh, Envoy L7 Telemetry & OPA Gatekeeper Guardrails](https://docs.google.com/document/d/1AhL3qxEfvHvhpMIZgrFBwA7el96n2csp/edit?usp=sharing&ouid=117891865848714392423&rtpof=true&sd=true)
+ 
+---
 
 ## Phase 6 — SPIFFE/SPIRE Zero Trust Workload Identity & mTLS
 
