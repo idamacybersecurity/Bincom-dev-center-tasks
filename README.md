@@ -6,6 +6,40 @@ The projects below demonstrate my practical experience in application security, 
 
 ----
 # 2. Enterprise DevSecOps & Container Supply Chain Security
+---
+
+## Phase 8 — Container Supply Chain Attestation, Cosign Cryptographic Image Signing & In-Cluster Kyverno Verification
+
+Implemented and tested container supply-chain security controls within the Enterprise DevSecOps Pipeline using Cosign, Syft, Grype, and Kyverno. Strengthened container image integrity and software provenance by introducing cryptographic image signing, Software Bill of Materials (SBOM) generation, vulnerability scanning, and admission-time verification before workloads are allowed to run in Kubernetes.
+
+### Key Activities
+
+- Integrated Cosign v3.1.3 into the GitHub Actions container build workflow to digitally sign application images using GitHub OIDC keyless signing.
+- Built and published API and worker container images to Amazon ECR and GitHub Container Registry (GHCR).
+- Resolved immutable image digests and used digest-based signing and verification to establish image authenticity.
+- Generated CycloneDX Software Bill of Materials (SBOMs) for API and worker images using Syft v1.55.0.
+- Integrated Grype vulnerability scanning into the CI workflow to scan generated SBOMs.
+- Created and attached CycloneDX SBOM attestations to the corresponding container image digests using Cosign.
+- Successfully verified image signatures and SBOM attestations against the expected GitHub Actions OIDC issuer and workflow identity.
+- Generated a separate encrypted Cosign static keypair and secured the private key through restricted directory and file permissions.
+- Demonstrated manual digest-based image signing and public-key verification using a local Docker Registry.
+- Deployed Kyverno v1.19.2 and implemented an `ImageValidatingPolicy` named `require-signed-devsecops-images`.
+- Configured Kyverno with `validationActions: Deny` and `failurePolicy: Fail` to enforce fail-closed verification for the configured application image repositories.
+- Configured admission-time verification of Cosign image signatures and CycloneDX SBOM attestations.
+- Performed positive and negative admission tests, confirming that:
+  - A properly signed and attested API image was admitted and reached `Running` status.
+  - An unsigned container image was rejected because no valid Cosign signature was found.
+  - A modified image digest was rejected because the registry could not find the requested manifest.
+- Verified Kyverno policy readiness and reviewed admission-controller logs to confirm signature and attestation verification results.
+- Updated the GitHub repository with the Phase 8 Kyverno policy and improved unsigned-image verification workflow.
+- Verified that the Phase 8 repository changes were pushed successfully to the `main` branch.
+- Preserved policy manifests, CI workflow evidence, verification outputs, screenshots, and supporting documentation for the Phase 8 report.
+
+### Tools & Technologies
+
+`Cosign v3.1.3` `Syft v1.55.0` `Grype` `Kyverno v1.19.2` `ImageValidatingPolicy` `CycloneDX` `SBOM` `GitHub Actions` `GitHub OIDC` `Amazon ECR` `GHCR` `Docker` `Kubernetes` `k3s` `AWS EC2` `Linux` `kubectl` `Container Supply Chain Security` `Cryptographic Image Signing` `Software Provenance` `Admission Control`
+
+ [View Phase 8 — Container Supply Chain Attestation](https://docs.google.com/document/d/1Z-NLJiiEMqbZUmZK4qRYQUBV9o3mztQf/edit?usp=sharing&ouid=117891865848714392423&rtpof=true&sd=true)
 
 ---
 ## Phase 7 — Zero Trust Service Mesh, Envoy L7 Telemetry & OPA Gatekeeper Guardrails
