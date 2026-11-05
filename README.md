@@ -7,6 +7,67 @@ The projects below demonstrate my practical experience in application security, 
 ----
 # 2. Enterprise DevSecOps & Container Supply Chain Security
 ---
+## Advanced Runtime Threat Observability, eBPF Tetragon Security Telemetry & Automated ChatOps Escalation
+
+Implemented and tested an advanced runtime threat observability and automated security alerting pipeline within the Enterprise DevSecOps Environment. Deployed Cilium Tetragon to capture kernel-level security events using eBPF, developed custom TracingPolicies to detect suspicious process execution and sensitive-file access attempts, and integrated Grafana Alloy with Loki for centralized security telemetry. Developed a Python-based ChatOps bridge to process Tetragon events and deliver structured, real-time security notifications to Slack.
+
+### Key Activities
+
+- Deployed Cilium Tetragon v1.8.0 into the AWS EC2-based k3s Kubernetes environment using Helm.
+- Configured Tetragon to integrate with the Kubernetes API and k3s containerd runtime socket.
+- Enabled process credential and namespace monitoring to enrich runtime security events with workload and process metadata.
+- Verified Tetragon agent and operator deployment, eBPF sensor initialization, BTF discovery, and JSON event export.
+- Configured persistent Tetragon JSON event logging at `/var/log/tetragon/tetragon.log`.
+- Created a custom TracingPolicy named `namespace-escape` to identify suspicious executable activity associated with namespace escape and privilege escalation.
+- Configured detection selectors for:
+  - `nsenter` execution.
+  - `unshare` execution.
+  - Executables launched from `/tmp/`.
+  - Executables launched from `/dev/shm/`.
+- Deployed controlled Kubernetes test workloads and executed all four targeted namespace-related detection scenarios.
+- Verified that all four namespace-escape policy selectors generated matching Tetragon events, with zero missed program probes reported.
+- Created a second custom TracingPolicy named `sensitive-file-write` to monitor write-capable `openat2` operations targeting sensitive filesystem locations.
+- Configured monitoring for:
+  - `/etc/passwd`
+  - `/etc/shadow`
+  - `/var/run/secrets/`
+- Used controlled workloads and direct `openat2` syscall tests to generate sensitive-file access events.
+- Verified matching Tetragon events for the tested sensitive paths, including write-capable open attempts against protected secret locations.
+- Deployed Grafana Loki for centralized storage and querying of runtime security telemetry.
+- Configured Grafana Alloy as a DaemonSet to collect Tetragon JSON logs from the host filesystem and forward them to Loki.
+- Verified successful log ingestion into Loki using the `{job="tetragon"}` stream selector.
+- Developed LogQL queries to isolate process execution events, namespace-escape detections, sensitive-file write-capable open attempts, and combined security-policy events.
+- Validated all four LogQL queries and confirmed that the combined policy query returned ten matching security events in the inspected dataset.
+- Developed a Python-based ChatOps bridge named `tetragon_chatops_bridge.py` to consume Tetragon events through the official `tetra` CLI and Tetragon gRPC event stream.
+- Implemented event parsing and classification for:
+  - Kubernetes shell execution.
+  - Namespace-escape policy detections.
+  - Sensitive-file write-capable open attempts.
+- Enriched security notifications with available workload and process metadata, including timestamps, node, pod, namespace, container ID, image information, process binary, parent process, command, UID/GID, PID, and policy details.
+- Implemented Slack Block Kit message formatting with structured security event fields and readable line breaks.
+- Integrated the Python bridge with Slack using an incoming webhook secured outside the Git repository.
+- Added retry handling and HTTP response validation for Slack notification delivery.
+- Implemented event filtering to ensure shell-execution alerts are associated with Kubernetes workloads containing pod and namespace metadata.
+- Added command-line testing options, including `--dry-run` and `--max-events`.
+- Executed six synthetic validation tests covering host-level shell filtering, Kubernetes shell acceptance, policy event preservation, and Slack message formatting. All six tests passed.
+- Verified dry-run processing for shell-execution, namespace-escape, and sensitive-file detections.
+- Configured the ChatOps bridge as a systemd service to support persistent event monitoring and automated notification delivery.
+- Verified successful live Slack notification delivery following service recovery.
+- Captured Slack alert evidence, including two MEDIUM-severity alerts and one HIGH-severity alert.
+- Investigated a temporary Kubernetes control-plane responsiveness incident that affected API communication, health checks, and event-stream continuity.
+- Restored service health and verified successful recovery through a subsequent live Slack notification test.
+- Validated Python syntax using `python3 -m py_compile` and checked repository changes using `git diff --check`.
+- Updated the GitHub repository with the runtime security policies, observability configuration, LogQL queries, and Python ChatOps bridge.
+- Committed and successfully pushed the implementation to the `main` branch.
+- Preserved policy manifests, deployment configurations, test outputs, Slack alert screenshots, and supporting evidence for the runtime security report.
+
+### Tools & Technologies
+
+`Cilium Tetragon v1.8.0` `eBPF` `Linux Kernel Tracing` `BTF` `TracingPolicy CRDs` `Kubernetes` `k3s` `AWS EC2` `Helm` `containerd` `Grafana Alloy v1.21.3` `Grafana Loki v3.7.9` `LogQL` `Python 3` `Tetragon gRPC` `tetra CLI` `Slack API` `Slack Block Kit` `Incoming Webhooks` `systemd` `Linux` `Bash` `Git` `GitHub` `Runtime Threat Detection` `Security Telemetry` `Automated ChatOps` `Security Incident Alerting`
+
+ [View Advanced Runtime Threat Observability, eBPF Tetragon Security Telemetry & Automated ChatOps Escalation](https://docs.google.com/document/d/14GGgz3sXjYkhvY49hyv7JqIgWkADro-7/edit?usp=sharing&ouid=117891865848714392423&rtpof=true&sd=true)
+ 
+---
 
 ## Phase 8 — Container Supply Chain Attestation, Cosign Cryptographic Image Signing & In-Cluster Kyverno Verification
 
