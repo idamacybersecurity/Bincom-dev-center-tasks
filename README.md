@@ -7,6 +7,50 @@ The projects below demonstrate my practical experience in application security, 
 ----
 # 2. Enterprise DevSecOps & Container Supply Chain Security
 ---
+# Automated Security Chaos Engineering — Fault Injection & Control Resilience Testing
+
+Implemented and tested an automated security chaos-engineering framework within the Enterprise DevSecOps Pipeline to evaluate the resilience, availability, recovery behavior, and security enforcement of Kubernetes security controls. Developed guarded Python-based fault-injection playbooks for Kyverno admission control, Loki security telemetry, and Tetragon runtime protection. The framework incorporates dry-run-by-default execution, explicit authorization for live experiments, bounded fault windows, baseline validation, automated recovery checks, rollback verification, machine-readable evidence, and a read-only resilience auditor.
+
+### Key Activities
+
+- Designed and implemented a Python-based chaos-engineering framework for controlled fault injection and security-control resilience testing on an AWS EC2-hosted, single-node k3s Kubernetes cluster.
+- Established a centralized safety configuration with dry-run-by-default behavior, explicit `--execute` authorization, protected namespace allowlists, experiment-specific fault-duration limits, baseline checks, recovery validation, and rollback safeguards.
+- Implemented three primary fault-injection playbooks targeting:
+  - Kyverno admission-controller and webhook availability.
+  - Loki security-telemetry service recovery.
+  - Tetragon runtime-security agent self-healing.
+- Implemented a Kyverno admission recovery experiment that temporarily interrupts Service endpoint availability, tests fail-closed admission behavior, restores the original Service selector, and verifies endpoint and admission recovery.
+- Executed four final Kyverno acceptance runs successfully. Each validated the outage-window rejection behavior, Service selector restoration, endpoint recovery, and post-recovery admission.
+- Verified that all five admission requests in each final Kyverno acceptance run were rejected during the tested webhook outage, with the expected `FAIL_CLOSED_WEBHOOK_UNAVAILABLE` result.
+- Recorded Kyverno controller and endpoint recovery times, with final acceptance runs recovering approximately 19.7–22.0 seconds after the restoration command.
+- Retained the complete Kyverno experiment history in the results directory. The historical inventory contains 15 records: four validated successful runs and eleven unsuccessful development records, comprising four live runs that accepted at least one outage-window request and seven aborted attempts.
+- Implemented a Loki telemetry recovery experiment that introduced a bounded 15-second service outage and validated service restoration, persistent-volume availability, and dependent telemetry components.
+- Verified Loki recovery in 42.044 seconds after restoration, with the Loki StatefulSet returning to Ready, the 5 GiB persistent volume remaining Bound, and Alloy and Tetragon passing post-recovery health checks.
+- Implemented a Tetragon recovery experiment that deleted a verified runtime-security agent pod and measured automatic DaemonSet replacement and readiness.
+- Verified Tetragon agent recovery in 24.354 seconds, within the configured 60-second recovery limit.
+- Integrated runtime-security detection evidence from Tetragon, including controlled shell-execution activity, and verified delivery of a test security alert through the Slack ChatOps escalation bridge.
+- Preserved runtime-security detection and recovery evidence in machine-readable JSON results and supporting screenshots.
+- Added bounded Prometheus monitoring evidence and resource observations to support post-experiment assessment of the security and telemetry components.
+- Developed a read-only Python resilience auditor to inspect saved experiment records, validate recovery and fail-closed evidence, evaluate detection fidelity, and generate a machine-readable resilience scorecard.
+- Extended the auditor with a separate Kyverno acceptance-campaign assessment so that the four designated final acceptance records could be evaluated independently from the complete historical experiment inventory.
+- Verified the final resilience scorecard:
+  - Availability: `PASS`
+  - Detection Fidelity: `PASS`
+  - Fail-Closed Integrity: `PASS`
+- Preserved the separate Kyverno historical inventory result as `MIXED_RESULTS`, ensuring that unsuccessful development records were not hidden by the final acceptance result.
+- Disclosed that the four-record acceptance campaign and corresponding auditor extension were designated after the results were known. The auditor also records that this designation timing is an operator/process assertion rather than something it independently verifies.
+- Documented operational limitations, including the absence of a sustained telemetry-loss or storage-saturation test, the inability to establish uninterrupted Tetragon detection while its agent was unavailable, and the limited scope of the Prometheus resource snapshot.
+- Verified that the final auditor operates in read-only mode and does not perform fault injection or modify Kubernetes resources.
+- Restored the Kyverno execution safety switch to `False` after live testing and verified that subsequent `--execute` attempts are blocked when the switch is disabled.
+- Committed and pushed the final auditor implementation and generated audit results to the repository's `main` branch.
+- Preserved experiment scripts, safety configuration, Kubernetes manifests, JSON results, auditor output, screenshots, and supporting project evidence under the `chaos-engineering/` directory.
+
+### Tools & Technologies
+
+`Python` `AWS EC2` `Ubuntu Linux` `Kubernetes` `k3s` `Kyverno v1.19.2` `Kyverno Admission Control` `Tetragon` `Tetragon v1.8.0` `Grafana Loki 3.7.9` `Grafana Alloy v1.21.3` `Prometheus` `LogQL` `Slack ChatOps` `Systemd` `Bash` `kubectl` `Helm` `JSON` `Git` `GitHub` `Chaos Engineering` `Fault Injection` `Security Observability` `Runtime Threat Detection` `Fail-Closed Validation` `Automated Recovery Testing` `Resilience Auditing`
+ [View Automated Security Chaos Engineering — Fault Injection & Control Resilience Testing](https://docs.google.com/document/d/1P8XHFDfscmyjQ1A8WHorMcPXfu4p1UYb/edit?usp=sharing&ouid=117891865848714392423&rtpof=true&sd=true)
+
+---
 ## Advanced Runtime Threat Observability, eBPF Tetragon Security Telemetry & Automated ChatOps Escalation
 
 Implemented and tested an advanced runtime threat observability and automated security alerting pipeline within the Enterprise DevSecOps Environment. Deployed Cilium Tetragon to capture kernel-level security events using eBPF, developed custom TracingPolicies to detect suspicious process execution and sensitive-file access attempts, and integrated Grafana Alloy with Loki for centralized security telemetry. Developed a Python-based ChatOps bridge to process Tetragon events and deliver structured, real-time security notifications to Slack.
