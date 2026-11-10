@@ -7,6 +7,59 @@ The projects below demonstrate my practical experience in application security, 
 ----
 # 2. Enterprise DevSecOps & Container Supply Chain Security
 ---
+
+# AI Agent Runtime Security — eBPF Runtime Tool Guardrails & Autonomous Threat Interception
+
+Designed, implemented, and tested an AI Agent Runtime Security framework within the Enterprise DevSecOps Pipeline to evaluate AI agent tool-abuse risks, enforce application-level security guardrails, detect runtime activity through eBPF instrumentation, and automate container-level security response. The framework combines a locally hosted Ollama language model, Python-based AI agent tooling, adversarial testing, protected tool execution, Cilium Tetragon runtime monitoring, and a guarded Python SOAR response bridge.
+
+### Key Activities
+
+- Designed and implemented a Python-based AI agent runtime security framework using a locally hosted Ollama model (`llama3.2`) and controlled tool-execution capabilities.
+- Deployed Ollama using Docker with persistent model storage, a loopback-bound API endpoint, and dedicated Docker networking.
+- Developed a baseline AI agent with file-reading and shell-execution capabilities to establish an application-level security reference before introducing tool guardrails.
+- Configured the baseline agent container with isolation controls, including a non-root execution identity (`10001:10001`), read-only root filesystem, dropped Linux capabilities, `no-new-privileges`, and resource limits.
+- Created synthetic workspace fixtures containing simulated private information to support controlled security experiments without exposing real credentials.
+- Implemented a red-team testing harness covering indirect prompt injection, file-path parameter tampering, unrestricted shell execution, and protected-file access.
+- Demonstrated that the baseline agent could read a synthetic private workspace file, access an external path (`/etc/hostname`), and execute an unrestricted shell command that created a marker file.
+- Tested indirect prompt injection through a poisoned document and observed response contamination, while confirming that unauthorized tool execution was not established in that test.
+- Verified that an attempted `/etc/shadow` read was denied by the container operating-system permission boundary.
+- Developed a protected Python agent with fixture-only file access, path-traversal protection, symbolic-link escape prevention, and restrictions against non-regular file access.
+- Replaced unrestricted shell execution with an explicit command allowlist permitting only `pwd` and `ls`.
+- Implemented shell-syntax validation to reject command chaining, pipes, redirection, command substitution, background execution, and other unauthorized shell operations.
+- Implemented fail-closed JSONL audit logging, ensuring that operations requiring audit persistence are rejected when the required audit write fails.
+- Executed the protected-agent unit-test suite and verified that all 14 tests passed.
+- Performed live model-driven protected-agent tests, confirming that approved fixture access remained functional while unauthorized private-file access and `touch` execution requests were denied.
+- Verified that the expected marker file was absent after the unauthorized shell-execution attempt.
+- Deployed Cilium Tetragon v1.8.0 to provide kernel-level runtime observability through eBPF instrumentation.
+- Verified host readiness for eBPF monitoring, including BTF kernel information, required BPF kernel options, and the cgroup v2 filesystem.
+- Developed a Tetragon tracing policy targeting `security_file_permission` events involving write-permission requests under `/workspace/output`.
+- Configured the Tetragon policy in monitor-only mode to capture matching runtime events without blocking the underlying operation.
+- Successfully captured a real kernel-level write-permission event from a disposable test container.
+- Preserved the captured event in `evidence/tetragon/workspace-write-event.jsonl`, including policy, kernel hook, process, user, file path, permission, return value, and container metadata.
+- Developed a Python SOAR bridge to validate incoming Tetragon security events and verify target-container eligibility before initiating quarantine.
+- Implemented event-validation controls covering policy identity, kernel hook, action, file path, permission value, return value, and container identity.
+- Implemented target-container validation covering expected container identity, image, security labels, running state, and required isolation characteristics.
+- Established dry-run-by-default behavior and explicit `--execute` authorization for live quarantine operations.
+- Configured the bridge to stop eligible disposable containers and verify their resulting state before reporting quarantine success.
+- Executed the SOAR regression-test suite and verified that all 14 tests passed.
+- Performed live SOAR testing and successfully quarantined the designated disposable container, `ai-agent-soar-test`.
+- Verified the quarantined container's final state through Docker inspection, confirming `exited` with exit code `137`.
+- Recorded a SOAR bridge reaction time of 2.570 seconds, measured after event receipt rather than as complete end-to-end detection and response latency.
+- Demonstrated live Tetragon event ingestion by the SOAR bridge and quarantine execution.
+- Documented the evidence-correlation qualification: the separately preserved Tetragon event and quarantine records contain different container IDs and therefore do not independently establish a matching event-to-container chain.
+- Preserved protected-agent audit logs, red-team results, Tetragon kernel-event evidence, SOAR execution logs, Docker inspection results, and supporting screenshots.
+- Performed integrity checks covering the original baseline agent source, protected-package SHA-256 checksums, Python compilation, and expected evidence files.
+- Verified that the Tetragon JSONL evidence contained a valid JSON object and that the project README passed `git diff --check`.
+- Completed project documentation and published the implementation, tests, integrity records, and supporting evidence to the remote GitHub repository.
+- Committed and successfully pushed the project to the repository's `main` branch in commit `1154b41`, containing 27 changed files and 2,337 insertions.
+
+### Tools & Technologies
+
+`Python` `Ollama` `llama3.2` `AWS EC2` `Ubuntu Linux` `Docker` `Docker Networking` `Linux Security` `Cilium Tetragon v1.8.0` `eBPF` `Kubernetes` `k3s` `Bash` `Shell Security` `JSONL Audit Logging` `SOAR` `Runtime Threat Detection` `Prompt Injection Testing` `Red-Team Testing` `Application-Level Guardrails` `Path Traversal Protection` `Symbolic-Link Protection` `Container Isolation` `Automated Quarantine` `Regression Testing` `SHA-256` `Git` `GitHub`
+
+ [View AI Agent Runtime Security — eBPF Runtime Tool Guardrails & Autonomous Threat Interception](https://docs.google.com/document/d/17ydZRu_LsHiGahYxDdmX_Sj_gSVw_8mi/edit?usp=sharing&ouid=117891865848714392423&rtpof=true&sd=true)
+ 
+---
 # Automated Security Chaos Engineering — Fault Injection & Control Resilience Testing
 
 Implemented and tested an automated security chaos-engineering framework within the Enterprise DevSecOps Pipeline to evaluate the resilience, availability, recovery behavior, and security enforcement of Kubernetes security controls. Developed guarded Python-based fault-injection playbooks for Kyverno admission control, Loki security telemetry, and Tetragon runtime protection. The framework incorporates dry-run-by-default execution, explicit authorization for live experiments, bounded fault windows, baseline validation, automated recovery checks, rollback verification, machine-readable evidence, and a read-only resilience auditor.
