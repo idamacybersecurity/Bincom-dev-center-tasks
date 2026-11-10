@@ -57,7 +57,7 @@ Designed, implemented, and tested an AI Agent Runtime Security framework within 
 
 `Python` `Ollama` `llama3.2` `AWS EC2` `Ubuntu Linux` `Docker` `Docker Networking` `Linux Security` `Cilium Tetragon v1.8.0` `eBPF` `Kubernetes` `k3s` `Bash` `Shell Security` `JSONL Audit Logging` `SOAR` `Runtime Threat Detection` `Prompt Injection Testing` `Red-Team Testing` `Application-Level Guardrails` `Path Traversal Protection` `Symbolic-Link Protection` `Container Isolation` `Automated Quarantine` `Regression Testing` `SHA-256` `Git` `GitHub`
 
- [View AI Agent Runtime Security — eBPF Runtime Tool Guardrails & Autonomous Threat Interception](https://docs.google.com/document/d/17ydZRu_LsHiGahYxDdmX_Sj_gSVw_8mi/edit?usp=sharing&ouid=117891865848714392423&rtpof=true&sd=true)
+ [View AI Agent Runtime Security — eBPF Runtime Tool Guardrails & Autonomous Threat Interception](https://docs.google.com/document/d/1G_wSZ9JkTDwEVgGWWuQSNWwUq0W9GLCr/edit?usp=sharing&ouid=117891865848714392423&rtpof=true&sd=true)
  
 ---
 # Automated Security Chaos Engineering — Fault Injection & Control Resilience Testing
