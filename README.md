@@ -101,6 +101,7 @@ Implemented and tested an automated security chaos-engineering framework within 
 ### Tools & Technologies
 
 `Python` `AWS EC2` `Ubuntu Linux` `Kubernetes` `k3s` `Kyverno v1.19.2` `Kyverno Admission Control` `Tetragon` `Tetragon v1.8.0` `Grafana Loki 3.7.9` `Grafana Alloy v1.21.3` `Prometheus` `LogQL` `Slack ChatOps` `Systemd` `Bash` `kubectl` `Helm` `JSON` `Git` `GitHub` `Chaos Engineering` `Fault Injection` `Security Observability` `Runtime Threat Detection` `Fail-Closed Validation` `Automated Recovery Testing` `Resilience Auditing`
+
  [View Automated Security Chaos Engineering — Fault Injection & Control Resilience Testing](https://docs.google.com/document/d/1P8XHFDfscmyjQ1A8WHorMcPXfu4p1UYb/edit?usp=sharing&ouid=117891865848714392423&rtpof=true&sd=true)
 
 ---
